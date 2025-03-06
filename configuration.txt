@@ -1,0 +1,7 @@
+API_KEY="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"
+EMBEDDING_MODEL="all-MiniLM-L6-v2"
+# EMBEDDING_MODEL="all-mpnet-base-v2"
+LLM_MODEL_LLAMA = "llama-3.3-70b-versatile"
+LLM_MODEL_DEEP_SEEK ="deepseek-r1-distill-llama-70b"
+CONNECTION_STRING = "DRIVER=SQL Server;SERVER=DESKTOP-CKVKRFN;DATABASE=RebateProgram;Trusted_Connection=yes;"
+REBATE_PROGRAM_CONNECTION_STRING = "DRIVER=SQL Server;SERVER=DESKTOP-CKVKRFN;DATABASE=RebateProgram;Trusted_Connection=yes;"

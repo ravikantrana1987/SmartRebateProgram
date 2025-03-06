@@ -1,5 +1,8 @@
 import json
 import streamlit as st
+from database_manager import DatabaseManager
+from config import Config
+import pandas as pd
 
 st.header("Configure Rebate Program")
 
@@ -9,8 +12,9 @@ import re
 import torch
 
 class RebateForm:
-    def __init__(self):
+    def __init__(self):         
         self.chat_manager = ChatManager()
+        self.db_manager = DatabaseManager(Config.DATABASE_CONNECTION_STRING)
 
     # Function to convert camelCase/PascalCase to space-separated words
     def format_field_name(self, name):
@@ -186,7 +190,7 @@ class RebateForm:
                     ]
                 }
             
-            data3 = {
+            data2 = {
   "ProgramName": {"type": "text", "value": "2025 AgriTechRetailer Rebate Program"},
   "StartDate": {"type": "date", "value": "10/01/2024"},
   "EndDate": {"type": "date", "value": "09/30/2025"},
@@ -282,6 +286,29 @@ class RebateForm:
                     st.write("Form Data:")
                     st.write(form_data)  # This will print out the Program details form data
                     st.write(product_data)  # This will print out product and rebate details
+                    start_date = form_data["StartDate"]
+                    formatted_date = start_date.strftime('%m-%d-%Y')
+                    print(formatted_date)
+                    st.write(formatted_date)
+
+                    # Save Form Data
+                    rebate_program_data = {
+                        'program_name': form_data["ProgramName"],
+                        'start_date': form_data["StartDate"].strftime('%m-%d-%Y'),
+                        'end_date': form_data["EndDate"].strftime('%m-%d-%Y'),
+                        'minimum_sales_value': form_data["MinimumSalesOrder"]
+                    }
+                    
+                    # schema = self.db_manager.get_schema_info()
+                    # print(schema)
+                    self.db_manager.save_row_data("dbo.Rebate_Program",rebate_program_data)
+
+                    # saved_data = self.db_manager.execute_query("SELECT * FROM information_schema.tables WHERE table_name = 'Rebate_Program'")
+                    # print(saved_data)
+                    st.success("Rebase program saved successfully!!")
+
+
+
 
 
 
